@@ -2,8 +2,7 @@ Package: husarion-motd
 Version: VERSION
 Section: custom
 Priority: optional
-Architecture: arm64
-Multi-Arch: same
+Architecture: ARCHITECTURE
 Essential: no
 Installed-Size: 1024
 Depends: python3

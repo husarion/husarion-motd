@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Set current version
-sed -i "s/Version: VERSION/Version: ${VERSION}/g" package_dir/DEBIAN/control
-
 # Create messagaes
 touch package_dir/usr/bin/title.txt
 figlet $LONG_MESSAGE > package_dir/usr/bin/title.txt
@@ -39,5 +36,16 @@ rm -rf package_dir/usr/bin/title.txt
 rm -rf package_dir/usr/bin/title_short.txt
 rm -rf package_dir/usr/bin/title_short.txt
 
-dpkg-deb --build package_dir husarion-motd-$VERSION-multi-arch.deb
-mv husarion-motd-$VERSION-multi-arch.deb ./output/husarion-motd-$VERSION-multi-arch.deb
+
+# Set current version
+sed -i "s/Version: VERSION/Version: ${VERSION}/g" control.base
+
+architectures=( arm64 armhf amd64 )
+for ARCHITECTURE in "${architectures[@]}"
+do
+    # Set architecture
+    cp -f control.base package_dir/DEBIAN/control
+	sed -i "s/Architecture: ARCHITECTURE/Architecture: ${ARCHITECTURE}/g" package_dir/DEBIAN/control
+    dpkg-deb --build package_dir husarion-motd-$VERSION-$ARCHITECTURE.deb
+    mv husarion-motd-$VERSION-$ARCHITECTURE.deb ./output/husarion-motd-$VERSION-$ARCHITECTURE.deb
+done

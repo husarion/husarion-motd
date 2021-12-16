@@ -16,7 +16,7 @@ RUN mkdir package_dir \
     && mkdir -p package_dir/usr/bin
 
 # Package info
-COPY ./control package_dir/DEBIAN/control
+COPY ./control control.base
 
 # First install script
 COPY ./postinst package_dir/DEBIAN/postinst
