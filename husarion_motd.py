@@ -41,7 +41,7 @@ def vertical_motd(title, base_info_text):
     # show stats in given order
     keys_order = ['Website', 'OS', 'Kernel', 'Board', 'Uptime', 'Memory']
     for key in keys_order:
-        out += f'{FontColors.LIGHT_RED}   {key}: {FontColors.RESET}{base_info_text[key]}\n'
+        out += f'{FontColors.LIGHT_RED}  {key}: {FontColors.RESET}{base_info_text[key]}\n'
     return '\n' + title + out
 
 
