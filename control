@@ -2,7 +2,7 @@ Package: husarion-motd
 Version: VERSION
 Section: custom
 Priority: optional
-Architecture: any
+Architecture: arm64
 Multi-Arch: same
 Essential: no
 Installed-Size: 1024

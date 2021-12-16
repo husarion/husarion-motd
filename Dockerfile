@@ -26,6 +26,9 @@ RUN chmod a+x package_dir/DEBIAN/postinst
 COPY ./husarion-motd.sh package_dir/etc/profile.d/husarion-motd.sh
 RUN chmod a+x package_dir/etc/profile.d/husarion-motd.sh
 
+# Copy husarion logo
+COPY ./husarion_logo.txt package_dir/usr/bin/husarion_logo.txt
+
 # Setup motod script
 COPY ./husarion_motd.py package_dir/usr/bin/husarion-motd
 RUN chmod a+x package_dir/usr/bin/husarion-motd

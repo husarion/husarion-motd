@@ -6,10 +6,10 @@ import socket
 
 # Bash color codes
 class FontColors:
-    RED = "\x1b[31m"
-    LIGHT_RED = "\x1b[91m"
-    WHITE = "\x1b[37m"
-    RESET = "\x1b[39m"
+    RED = '\x1b[31m'
+    LIGHT_RED = '\x1b[91m'
+    WHITE = '\x1b[37m'
+    RESET = '\x1b[39m'
 
 
 def horizontal_motd(title, logo, base_info_text):
@@ -29,7 +29,7 @@ def horizontal_motd(title, logo, base_info_text):
     keys_order = ['Website', 'OS', 'Kernel', 'Board', 'Uptime', 'Memory']
     for i, key in enumerate(keys_order):
         splitted_logo[docs_idx+i] += f'{FontColors.LIGHT_RED}  {key}: {FontColors.RESET}{base_info_text[key]}'
-    return '\n' + '\n'.join(splitted_logo) + '\n'
+    return '\n'.join(splitted_logo)
 
 
 def vertical_motd(title, base_info_text):
@@ -42,25 +42,10 @@ def vertical_motd(title, base_info_text):
     keys_order = ['Website', 'OS', 'Kernel', 'Board', 'Uptime', 'Memory']
     for key in keys_order:
         out += f'{FontColors.LIGHT_RED}  {key}: {FontColors.RESET}{base_info_text[key]}\n'
-    return '\n' + title + out
+    return title + out
 
 
-if __name__ == '__main__':
-    # import title graphic
-    title_file = open(os.getcwd() + '/title.txt', 'r')
-    title = title_file.read()
-    title_file.close()
-
-    # import multiline title graphic
-    title_short_file = open(os.getcwd() + '/title_short.txt', 'r')
-    title_short = title_short_file.read()
-    title_short_file.close()
-
-    # import Husarion logo
-    husarion_logo_file = open(os.getcwd() + '/husarion_logo.txt', 'r')
-    husarion_logo = husarion_logo_file.read()
-    husarion_logo_file.close()
-
+def main(title, title_short, husarion_logo):
     # get operating system name
     operating_system = subprocess.check_output('''awk -F= '$1=="VERSION" { print $2 ;}' /etc/os-release''', shell=True)
     operating_system = str(operating_system).split('"')[1]
@@ -70,8 +55,10 @@ if __name__ == '__main__':
     kernel = str(kernel)[2:-3]
 
     # get how long system is up
-    uptime = subprocess.check_output('uptime | awk -F\'( |,|:)+\' \'{print $6,$7\",\",$8,\"hours,\",$9,\"minutes.\"}\'', shell=True)
-    uptime = str(uptime)[2:-3].replace(' days,', 'd.').replace(' hours,', 'h.').replace(' minutes.', 'm.')
+    uptime = subprocess.check_output('uptime -p', shell=True)
+    uptime = str(uptime)[5:-3].replace(' days,', 'd.').replace(' day,', 'd.')
+    uptime = uptime.replace(' hours,', 'h.').replace(' hour,', 'h.')
+    uptime = uptime.replace(' minutes', 'm.').replace(' minute', 'm.')
 
     # get how much memory is available for root partition
     memory_available = subprocess.check_output('df -BMiB / | awk \'NR == 2{print $2+0}\'', shell=True)
@@ -96,10 +83,9 @@ if __name__ == '__main__':
                       'Memory': f'{memory_used}MB / {memory_available}MB ({memory_percent}%)'
                       }
 
-    title_width = len(title.split('\n')[0])
-    title_short_width = len(title_short.split('\n')[0])
-    logo_width = len(husarion_logo.split('\n')[0])
-    info_width = len(base_info_text)
+    title_width = len(title.split('\n')[1])
+    title_short_width = len(title_short.split('\n')[1])
+    logo_width = len(husarion_logo.split('\n')[1])
 
     husarion_logo = husarion_logo.replace('%', FontColors.RED + 'w')
     husarion_logo = husarion_logo.replace('.', FontColors.WHITE + '#')
@@ -116,3 +102,5 @@ if __name__ == '__main__':
     # Simplified graphic has to be shown
     else:
         print(vertical_motd(title_short, base_info_text))
+
+# __main__ callback added after creation of logos
