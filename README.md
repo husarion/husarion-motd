@@ -16,4 +16,4 @@ docker container run --rm \
     husarion-motod-builder \
     ./build.sh
 ```
-Final deb package will appear in */output* directory. For shorter messages use `;` to separate new lines. Created packages are multi-arch.
+Final deb package will appear in */output* directory. For shorter messages use `\n` to separate new lines. Created packages are multi-arch.

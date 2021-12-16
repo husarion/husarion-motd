@@ -101,6 +101,6 @@ def main(title, title_short, husarion_logo):
         print(horizontal_motd(title_short, husarion_logo, base_info_text))
     # Simplified graphic has to be shown
     else:
-        print(vertical_motd(title_short, base_info_text))
+        print(vertical_motd(title, base_info_text))
 
 # __main__ callback added after creation of logos
