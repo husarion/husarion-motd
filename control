@@ -1,0 +1,11 @@
+Package: husarion-motd
+Version: VERSION
+Section: custom
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Essential: no
+Installed-Size: 1024
+Depends: python3
+Maintainer: Husarion <support@husarion.com>
+Description: Welcome message for Linux-based Husarion devices

@@ -4,23 +4,16 @@ Welcome message for Linux-based Husarion devices
 
 ## Building
 
-To build the package you need `nim`:
+To build the package you need `docker`:
 
+```bash
+docker build -t husarion-motod-builder .
+docker container run --rm \
+    -e VERSION='1.0.3' \
+    -e LONG_MESSAGE='ROSbot 2.0 PRO' \
+    -e SHORT_MESSAGE='ROSbot;2.0 PRO' \
+    -v ${PWD}/output:/output \
+    husarion-motod-builder \
+    ./build.sh
 ```
-sudo apt install nim
-```
-
-You can use `build.sh` script to preapare `.deb` package:
-
-```
-./build.sh
-```
-
-Script will create a `.deb` package named according to pattern: `husarion-motd-VERSION-ARCH.deb`
-
-Install it with:
-
-```
-sudo dpkg -i husarion-motd-VERSION-ARCH.deb
-```
-
+Final deb package will appear in */output* directory. For shorter messages use `;` to separate new lines. Created packages are multi-arch.
