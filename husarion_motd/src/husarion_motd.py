@@ -17,11 +17,11 @@ def horizontal_motd(title, logo, base_info_text):
     splitted_logo = logo.split('\n')
     # combine logo and title text
     for i in range(len(splitted_title)):
-        splitted_logo[i+1] += f'{FontColors.RESET} {splitted_title[i]}'
+        splitted_logo[i] += f'{FontColors.RESET} {splitted_title[i]}'
 
-    docs_idx = len(splitted_title)+1
+    docs_idx = len(splitted_title)-1
     # show logged user name and hostname
-    splitted_logo[docs_idx] += f'{FontColors.LIGHT_RED}  {base_info_text["user"]}{FontColors.RESET}@{FontColors.LIGHT_RED}{base_info_text["hostname"]}'
+    splitted_logo[docs_idx] += f'{FontColors.LIGHT_RED} {base_info_text["user"]}{FontColors.RESET}@{FontColors.LIGHT_RED}{base_info_text["hostname"]}'
     # draw horizontal line to separate user from stats
     splitted_logo[docs_idx+1] += '  ' + FontColors.RESET + '='*(len(base_info_text['user']) + len(base_info_text['hostname']) + 1)
     docs_idx += 2
@@ -87,8 +87,9 @@ def main(title, title_short, husarion_logo):
     title_short_width = len(title_short.split('\n')[1])
     logo_width = len(husarion_logo.split('\n')[1])
 
-    husarion_logo = husarion_logo.replace('%', FontColors.RED + 'w')
-    husarion_logo = husarion_logo.replace('.', FontColors.WHITE + '#')
+    husarion_logo = [FontColors.WHITE + c for c in husarion_logo]
+    husarion_logo = ''.join(husarion_logo)
+    husarion_logo = husarion_logo.replace(FontColors.WHITE + '/', FontColors.RED + '/')
 
     _, terminal_width = os.popen('stty size', 'r').read().split()
     terminal_width = int(terminal_width)
@@ -104,3 +105,4 @@ def main(title, title_short, husarion_logo):
         print(vertical_motd(title, base_info_text))
 
 # __main__ callback added after creation of logos
+
