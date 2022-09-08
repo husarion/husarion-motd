@@ -34,9 +34,9 @@ jobs:
         husarion-motod-builder
         ./build_platforms.py
     
-    # - uses: ncipollo/release-action@v1
-    #   with:
-    #     artifacts: "output/*.deb"
-    #     artifactErrorsFailBuild: true
-    #     tag: ${{ env.RELEASE_VERSION }}
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "output/*.deb"
+        artifactErrorsFailBuild: true
+        tag: ${{ env.RELEASE_VERSION }}
 
