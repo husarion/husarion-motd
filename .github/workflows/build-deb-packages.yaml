@@ -38,5 +38,6 @@ jobs:
       with:
         artifacts: "output/*.deb"
         artifactErrorsFailBuild: true
+        allowUpdates: true
         tag: ${{ env.RELEASE_VERSION }}
 
