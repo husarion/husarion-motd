@@ -27,7 +27,7 @@ jobs:
     - name: Build deb package in docker
       run: >
         docker container run --rm
-        -e VERSION='2.0.0'
+        -e VERSION=${{ env.RELEASE_VERSION }}
         -v ${{ github.workspace }}/output:/output
         husarion-motod-builder
         ./build_platforms.py
