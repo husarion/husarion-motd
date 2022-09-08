@@ -1,8 +1,8 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
-ENV VERSION "1.0.0"
-ENV LONG_MESSAGE "ROSbot 2.0"
-ENV SHORT_MESSAGE "ROSbot;2.0"
+ENV VERSION "0.0.0"
+ENV LONG_MESSAGE "ROSbot 2R"
+ENV SHORT_MESSAGE "ROSbot;2R"
 
 # Install ASCII text creator, debian package manager and python
 RUN apt update \

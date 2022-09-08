@@ -10,6 +10,8 @@ figlet $SHORT_MESSAGE_DOWN >> package_dir/usr/bin/title_short.txt
 
 cp husarion-motd.base package_dir/usr/bin/husarion-motd
 
+# append hardcoded strings into python file
+
 echo "
 husarion_logo=r'''" >> package_dir/usr/bin/husarion-motd
 echo "$(cat package_dir/usr/bin/husarion_logo.txt)" >> package_dir/usr/bin/husarion-motd

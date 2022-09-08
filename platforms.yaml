@@ -1,14 +1,20 @@
-rosbot-2.0:
+rosbot-2r:
     short_msg_up: 'ROSbot'
-    short_msg_down: '2.0'
-    long_msg: 'ROSbot 2.0'
+    short_msg_down: '2R'
+    long_msg: 'ROSbot 2R'
     architectures: [arm64]
 
-rosbot-2.0-pro:
+rosbot-2-pro:
     short_msg_up: 'ROSbot'
-    short_msg_down: '2.0 PRO'
-    long_msg: 'ROSbot 2.0 PRO'
+    short_msg_down: '2 PRO'
+    long_msg: 'ROSbot 2 PRO'
     architectures: [amd64]
+
+rosbot-xl:
+    short_msg_up: 'ROSbot'
+    short_msg_down: 'XL'
+    long_msg: 'ROSbot XL'
+    architectures: [amd64, arm64]
     
 panther:
     short_msg_up: 'Panther'

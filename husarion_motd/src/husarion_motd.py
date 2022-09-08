@@ -5,7 +5,7 @@ import subprocess
 import socket
 
 # Bash color codes
-class FontColors:
+class TextColors:
     RED = '\x1b[31m'
     LIGHT_RED = '\x1b[91m'
     WHITE = '\x1b[37m'
@@ -13,35 +13,35 @@ class FontColors:
 
 
 def horizontal_motd(title, logo, base_info_text):
-    splitted_title = title.split('\n')
-    splitted_logo = logo.split('\n')
+    split_title = title.split('\n')
+    split_logo = logo.split('\n')
     # combine logo and title text
-    for i in range(len(splitted_title)):
-        splitted_logo[i] += f'{FontColors.RESET} {splitted_title[i]}'
+    for i in range(len(split_title)):
+        split_logo[i] += f'{TextColors.RESET} {split_title[i]}'
 
-    docs_idx = len(splitted_title)-1
+    docs_idx = len(split_title) - 1
     # show logged user name and hostname
-    splitted_logo[docs_idx] += f'{FontColors.LIGHT_RED} {base_info_text["user"]}{FontColors.RESET}@{FontColors.LIGHT_RED}{base_info_text["hostname"]}'
+    split_logo[docs_idx] += f'{TextColors.LIGHT_RED} {base_info_text["user"]}{TextColors.RESET}@{TextColors.LIGHT_RED}{base_info_text["hostname"]}'
     # draw horizontal line to separate user from stats
-    splitted_logo[docs_idx+1] += '  ' + FontColors.RESET + '='*(len(base_info_text['user']) + len(base_info_text['hostname']) + 1)
+    split_logo[docs_idx+1] += '  ' + TextColors.RESET + '='*(len(base_info_text['user']) + len(base_info_text['hostname']) + 1)
     docs_idx += 2
     # show stats in given order
     keys_order = ['Website', 'OS', 'Kernel', 'Board', 'Uptime', 'Memory']
     for i, key in enumerate(keys_order):
-        splitted_logo[docs_idx+i] += f'{FontColors.LIGHT_RED}  {key}: {FontColors.RESET}{base_info_text[key]}'
-    return '\n'.join(splitted_logo)
+        split_logo[docs_idx+i] += f'{TextColors.LIGHT_RED}  {key}: {TextColors.RESET}{base_info_text[key]}'
+    return '\n'.join(split_logo)
 
 
 def vertical_motd(title, base_info_text):
     # show logged user name and hostname
-    out = f'  {FontColors.LIGHT_RED}{base_info_text["user"]}{FontColors.RESET}@{FontColors.LIGHT_RED}{base_info_text["hostname"]}\n'
+    out = f'  {TextColors.LIGHT_RED}{base_info_text["user"]}{TextColors.RESET}@{TextColors.LIGHT_RED}{base_info_text["hostname"]}\n'
     # draw horizontal line to separate user from stats
-    out += '  ' + FontColors.RESET + '='*(len(base_info_text['user']) + len(base_info_text['hostname']) + 1)
+    out += '  ' + TextColors.RESET + '='*(len(base_info_text['user']) + len(base_info_text['hostname']) + 1)
     out += '\n'
     # show stats in given order
     keys_order = ['Website', 'OS', 'Kernel', 'Board', 'Uptime', 'Memory']
     for key in keys_order:
-        out += f'{FontColors.LIGHT_RED}  {key}: {FontColors.RESET}{base_info_text[key]}\n'
+        out += f'{TextColors.LIGHT_RED}  {key}: {TextColors.RESET}{base_info_text[key]}\n'
     return title + out
 
 
@@ -54,8 +54,9 @@ def main(title, title_short, husarion_logo):
     kernel = subprocess.check_output('uname -r', shell=True)
     kernel = str(kernel)[2:-3]
 
-    # get how long system is up
+    # get time how long system is already running
     uptime = subprocess.check_output('uptime -p', shell=True)
+    # replace days, hours, minutes with d. h. m.
     uptime = str(uptime)[5:-3].replace(' days,', 'd.').replace(' day,', 'd.')
     uptime = uptime.replace(' hours,', 'h.').replace(' hour,', 'h.')
     uptime = uptime.replace(' minutes', 'm.').replace(' minute', 'm.')
@@ -73,32 +74,37 @@ def main(title, title_short, husarion_logo):
     memory_percent = str(memory_percent)[2:-3]
 
     # map computer stats to dict
-    base_info_text = {'user': os.getenv('USER'),
-                      'hostname': socket.gethostname(),
-                      'Website': 'https://husarion.com/',
-                      'Board': os.getenv('SBC_NAME_FANCY'),
-                      'OS': operating_system,
-                      'Kernel': kernel,
-                      'Uptime': uptime,
-                      'Memory': f'{memory_used}MB / {memory_available}MB ({memory_percent}%)'
-                      }
+    base_info_text = {
+        'user': os.getenv('USER'),
+        'hostname': socket.gethostname(),
+        'Website': 'https://husarion.com/',
+        'Board': os.getenv('SBC_NAME_FANCY'),
+        'OS': operating_system,
+        'Kernel': kernel,
+        'Uptime': uptime,
+        'Memory': f'{memory_used}MiB / {memory_available}MiB ({memory_percent}%)'
+    }
 
     title_width = len(title.split('\n')[1])
     title_short_width = len(title_short.split('\n')[1])
     logo_width = len(husarion_logo.split('\n')[1])
 
-    husarion_logo = [FontColors.WHITE + c for c in husarion_logo]
+    # Force white color on the whole logo
+    husarion_logo = [TextColors.WHITE + c for c in husarion_logo]
     husarion_logo = ''.join(husarion_logo)
-    husarion_logo = husarion_logo.replace(FontColors.WHITE + '/', FontColors.RED + '/')
+    # Replace color from white to read for all slash symbols
+    husarion_logo = husarion_logo.replace(TextColors.WHITE + '/', TextColors.RED + '/')
 
+    # get current terminal window width
     _, terminal_width = os.popen('stty size', 'r').read().split()
     terminal_width = int(terminal_width)
 
-    # Full graphic can fit and window is over 80 characters wide
-    if terminal_width >= title_width + logo_width + 5 and terminal_width > 79:
+    # entice graphic can fit the terminal window
+    window_padding = 5
+    if terminal_width >= title_width + logo_width + window_padding:
         print(horizontal_motd(title, husarion_logo, base_info_text))
-    # Reduced graphic has to be used and window is over 80 character wide
-    elif terminal_width >= title_short_width + logo_width + 1 and terminal_width > 79:
+    # reduced graphic has to be used since image won't fit the screen
+    elif terminal_width >= title_short_width + logo_width + 1:
         print(horizontal_motd(title_short, husarion_logo, base_info_text))
     # Simplified graphic has to be shown
     else:

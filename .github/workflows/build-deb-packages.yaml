@@ -1,0 +1,42 @@
+name: Build deb packages
+
+on:
+  push:
+    # tags:
+    #   - '*'
+    branches:
+      - 'dev'
+  pull_request:
+    types: [closed]
+  
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set env
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+    - name: Create output dir
+      run: mkdir output
+
+    - name: Build base docker
+      run: docker build -t husarion-motod-builder .
+
+    - name: Build deb package in docker
+      run: |
+        docker container run --rm
+          -e VERSION='${{ env.RELEASE_VERSION }}'
+          -v ${PWD}/output:/output
+          husarion-motod-builder
+          ./build_platforms.py
+    
+    # - uses: ncipollo/release-action@v1
+    #   with:
+    #     artifacts: "output/*.deb"
+    #     artifactErrorsFailBuild: true
+    #     tag: ${{ env.RELEASE_VERSION }}
+
