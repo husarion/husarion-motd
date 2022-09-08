@@ -2,10 +2,8 @@ name: Build deb packages
 
 on:
   push:
-    # tags:
-    #   - '*'
-    branches:
-      - 'dev'
+    tags:
+      - '^(\d+\.)?(\d+\.)?(\*|\d+)$'
   pull_request:
     types: [closed]
   
@@ -39,6 +37,5 @@ jobs:
         artifacts: "output/*.deb"
         artifactErrorsFailBuild: true
         allowUpdates: true
-        # draft: true
         tag: ${{ env.RELEASE_VERSION }}
 
