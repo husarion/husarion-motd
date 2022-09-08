@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - '^(\d+\.)?(\d+\.)?(\*|\d+)$'
-  pull_request:
-    types: [closed]
   
 jobs:
   build:
