@@ -27,12 +27,12 @@ jobs:
       run: docker build -t husarion-motod-builder .
 
     - name: Build deb package in docker
-      run: |
+      run: >
         docker container run --rm
-          -e VERSION='${{ env.RELEASE_VERSION }}'
-          -v ${PWD}/output:/output
-          husarion-motod-builder
-          ./build_platforms.py
+        -e VERSION='${{ env.RELEASE_VERSION }}'
+        -v ${PWD}/output:/output
+        husarion-motod-builder
+        ./build_platforms.py
     
     # - uses: ncipollo/release-action@v1
     #   with:
