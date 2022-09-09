@@ -3,7 +3,7 @@ name: Build deb packages
 on:
   push:
     tags:
-      - '(\d+\.)?(\d+\.)?(\*|\d+)'
+      - '*.*.*'
   
 jobs:
   build:
