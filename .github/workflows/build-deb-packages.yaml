@@ -3,9 +3,9 @@ name: Build deb packages
 on:
   push:
     tags:
-      - '1.*'
-    tags-ignore:
       - '2.*'
+    tags-ignore:
+      - '1.*'
   
 jobs:
   build:
