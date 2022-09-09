@@ -12,7 +12,7 @@ Building process is handled inside docker container so make sure you have it ins
 mkdir output
 docker build -t husarion-motod-builder .
 docker container run --rm \
-    -e VERSION='2.0.1' \
+    -e VERSION='2.0.0' \
     -e PLATFORM='rosbot-2r' \
     -e LONG_MESSAGE='ROSbot 2R' \
     -e SHORT_MESSAGE_UP='ROSbot'
@@ -22,7 +22,7 @@ docker container run --rm \
     husarion-motod-builder \
     ./build_package.sh
 ```
-Final deb package will appear in */output* directory as *husarion-motd-rosbot-2r-2.0.1-arm64.deb*.
+Final deb package will appear in */output* directory as *husarion-motd-rosbot-2r-2.0.0-arm64.deb*.
 Environment variables:
 - `VERSION`: version of deb package.
 - `PLATFORM`: platform or robot name.
@@ -38,7 +38,7 @@ Environment variables:
 mkdir output
 docker build -t husarion-motod-builder .
 docker container run --rm \
-    -e VERSION='2.0.1' \
+    -e VERSION='2.0.0' \
     -v ${PWD}/output:/output \
     husarion-motod-builder \
     ./build_platforms.py
@@ -48,9 +48,9 @@ docker container run --rm \
 YAML file allows to automate the above process by specifying platforms and their configs in single file.
 
 New platform is added by entering new item. Parameters of this item are exactly the same as for environment variables, but written in lower case. Below YAML example will create three following files:
-- *husarion-motd-rosbot-2r-2.0.1-arm64.deb*
-- *husarion-motd-rosbot-xl-2.0.1-arm64.deb*
-- *husarion-motd-rosbot-xl-2.0.1-amd64.deb*
+- *husarion-motd-rosbot-2r-2.0.0-arm64.deb*
+- *husarion-motd-rosbot-xl-2.0.0-arm64.deb*
+- *husarion-motd-rosbot-xl-2.0.0-amd64.deb*
 
 Note there are two files for ROSbot XL. One for **amd64** and one for **arm64** architecture.
 
