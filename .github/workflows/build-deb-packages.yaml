@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - '2.*'
-    tags-ignore:
-      - '1.*'
   
 jobs:
   build:
