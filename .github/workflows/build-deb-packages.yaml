@@ -3,7 +3,7 @@ name: Build deb packages
 on:
   push:
     tags:
-      - "2.*"
+      - '*'
   
 jobs:
   build:
