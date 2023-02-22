@@ -21,3 +21,9 @@ panther:
     short_msg_down: ''
     long_msg: 'Panther'
     architectures: [amd64, arm64]
+
+generic:
+    short_msg_up: 'Husarion'
+    short_msg_down: ''
+    long_msg: 'Husarion'
+    architectures: [amd64, arm64]
