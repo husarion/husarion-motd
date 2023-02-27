@@ -2,7 +2,7 @@ rosbot-2r:
     short_msg_up: 'ROSbot'
     short_msg_down: '2R'
     long_msg: 'ROSbot 2R'
-    architectures: [arm64]
+    architectures: [amd64, arm64]
 
 rosbot-2-pro:
     short_msg_up: 'ROSbot'
