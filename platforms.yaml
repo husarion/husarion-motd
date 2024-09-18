@@ -4,6 +4,18 @@ rosbot-2r:
     long_msg: 'ROSbot 2R'
     architectures: [amd64, arm64]
 
+rosbot-3:
+    short_msg_up: 'ROSbot'
+    short_msg_down: '3'
+    long_msg: 'ROSbot 3'
+    architectures: [amd64, arm64]
+
+rosbot-3-pro:
+    short_msg_up: 'ROSbot'
+    short_msg_down: '3 PRO'
+    long_msg: 'ROSbot 3 PRO'
+    architectures: [amd64, arm64]
+
 rosbot-2-pro:
     short_msg_up: 'ROSbot'
     short_msg_down: '2 PRO'
@@ -20,6 +32,12 @@ panther:
     short_msg_up: 'Panther'
     short_msg_down: ''
     long_msg: 'Panther'
+    architectures: [amd64, arm64]
+
+lynx:
+    short_msg_up: 'Lynx'
+    short_msg_down: ''
+    long_msg: 'Lynx'
     architectures: [amd64, arm64]
 
 generic:
