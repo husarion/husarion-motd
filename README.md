@@ -70,3 +70,15 @@ rosbot-xl:
 
 ### OS requirements
 Field `Board` requires environment variable `SBC_NAME_FANCY`. This is used to set custom SBC name such as **Raspberry Pi 4b**.
+
+## Workflow
+
+triggering:
+
+```bash
+git add -A
+git commit -m "my changes"
+git push
+git tag 3.0.11
+git push origin 3.0.11
+```
